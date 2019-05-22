@@ -1,0 +1,42 @@
+[% # This is a TT comment. -%]
+ 
+[%- # Provide a title -%]
+[% META title = 'Item List' -%]
+ 
+[% # Note That the '-' at the beginning or end of TT code  -%]
+[% # "chomps" the whitespace/newline at that end of the    -%]
+[% # output (use View Source in browser to see the effect) -%]
+ 
+[% # Some basic HTML with a loop to display items -%]
+<table>
+<tr><th>Name</th><th>Brand</th><th>Categories</th></tr>
+[% # Display each item in a table row %]
+[% FOREACH item IN items -%]
+  <tr>
+    <td>[% item.name %]</td>
+    <td>[% item.brand %]</td>
+    <td>
+      [% # NOTE: See Chapter 4 for a better way to do this!                      -%]
+      [% # First initialize a TT variable to hold a list.  Then use a TT FOREACH -%]
+      [% # loop in 'side effect notation' to load just the last names of the     -%]
+      [% # categories into the list. Note that the 'push' TT vmethod doesn't return -%]
+      [% # a value, so nothing will be printed here.  But, if you have something -%]
+      [% # in TT that does return a value and you don't want it printed, you     -%]
+      [% # 1) assign it to a bogus value, or                                     -%]
+      [% # 2) use the CALL keyword to call it and discard the return value.      -%]
+      [% tt_categories = [ ];
+        tt_categories.push(category.last_name) FOREACH category = item.categories %]
+      [% # Now use a TT 'virtual method' to display the category count in parens   -%]
+      [% # Note the use of the TT filter "| html" to escape dangerous characters -%]
+      ([% tt_categories.size | html %])
+      [% # Use another TT vmethod to join & print the names & comma separators   -%]
+      [% tt_categories.join(', ') | html %]
+    </td>
+    <td>
+      [% # Add a link to delete a book %]
+      <a href="[%
+          c.uri_for(c.controller.action_for('delete'), [item.id]) %]">Delete</a>
+    </td>
+  </tr>
+[% END -%]
+</table>

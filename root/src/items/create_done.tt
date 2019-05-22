@@ -1,0 +1,31 @@
+[% # Use the TT Dumper plugin to Data::Dumper variables to the browser   -%]
+[% # Not a good idea for production use, though. :-)  'Indent=1' is      -%]
+[% # optional, but prevents "massive indenting" of deeply nested objects -%]
+[% USE Dumper(Indent=1) -%]
+ 
+[% # Set the page name.  META can 'go back' and set values in templates -%]
+[% # that have been processed 'before' this template (here it's updating -%]
+[% # the name in the root/src/wrapper.tt2 wrapper template).  Note that -%]
+[% # META only works on simple/static strings (i.e. there is no variable -%]
+[% # interpolation -- if you need dynamic/interpolated content in your   -%]
+[% # name, set "$c->stash(name => $something)" in the controller).     -%]
+[% META name = 'Item Created' %]
+ 
+[% # Output information about the record that was added.  First name.   -%]
+<p>Added Item '[% item.name %]'
+ 
+[% # Then, output the last name of the first category -%]
+by '[% item.categories.first.name %]'
+ 
+[% # Then, output the brand for the Item that was added -%]
+with a brand of [% item.brand %].</p>
+ 
+[% # Provide a link back to the list page.  'c.uri_for' builds -%]
+[% # a full URI; e.g., 'http://localhost:3000/Items/list'      -%]
+<p><a href="[% c.uri_for('/items/list') %]">Return to list</a></p>
+ 
+[% # Try out the TT Dumper (for development only!) -%]
+<pre>
+Dump of the 'Item' variable:
+[% Dumper.dump(item) %]
+</pre>

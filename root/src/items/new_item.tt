@@ -1,0 +1,10 @@
+[% META title = 'Manual Form Item Create' -%]
+ 
+<form method="post" action="[% c.uri_for('new_item_do') %]">
+<table>
+    <tr><td>Name:</td><td><input type="text" name="name"></td></tr>
+    <tr><td>Brand:</td><td><input type="text" name="brand"></td></tr>
+    <tr><td>Category ID:</td><td><input type="text" name="category_id"></td></tr>
+</table>
+<input type="submit" name="Submit" value="Submit">
+</form>
