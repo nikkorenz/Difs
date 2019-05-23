@@ -20,5 +20,19 @@ sub created_after {
         created => { '>' => $date_str }
     });
 }
+
+=head2 title_like
+ 
+A predefined search for books with a 'LIKE' search in the string
+ 
+=cut
+ 
+sub brand_like {
+    my ($self, $title_str) = @_;
+ 
+    return $self->search({
+        brand => { 'like' => "%$title_str%" }
+    });
+}
  
 1;

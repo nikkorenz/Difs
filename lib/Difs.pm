@@ -22,6 +22,12 @@ use Catalyst qw/
     Static::Simple
 
     StackTrace
+
+    Authentication
+ 
+    Session
+    Session::Store::File
+    Session::State::Cookie
 /;
 
 extends 'Catalyst';
@@ -55,6 +61,17 @@ __PACKAGE__->config(
         TIMER              => 0,
         # This is your wrapper template located in the 'root/src'
         WRAPPER => 'wrapper.tt',
+    },
+);
+
+# Configure SimpleDB Authentication
+__PACKAGE__->config(
+    'Plugin::Authentication' => {
+        default => {
+            class           => 'SimpleDB',
+            user_model      => 'DB::User',
+            password_type   => 'clear',
+        },
     },
 );
 

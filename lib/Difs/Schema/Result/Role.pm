@@ -1,12 +1,12 @@
 use utf8;
-package MyApp::Schema::Result::Category;
+package Difs::Schema::Result::Role;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-MyApp::Schema::Result::Category
+Difs::Schema::Result::Role
 
 =cut
 
@@ -32,11 +32,11 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp");
 
-=head1 TABLE: C<category>
+=head1 TABLE: C<role>
 
 =cut
 
-__PACKAGE__->table("category");
+__PACKAGE__->table("role");
 
 =head1 ACCESSORS
 
@@ -46,7 +46,7 @@ __PACKAGE__->table("category");
   is_auto_increment: 1
   is_nullable: 0
 
-=head2 name
+=head2 role
 
   data_type: 'text'
   is_nullable: 1
@@ -56,7 +56,7 @@ __PACKAGE__->table("category");
 __PACKAGE__->add_columns(
   "id",
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
-  "name",
+  "role",
   { data_type => "text", is_nullable => 1 },
 );
 
@@ -74,34 +74,34 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
-=head2 item_categories
+=head2 user_roles
 
 Type: has_many
 
-Related object: L<MyApp::Schema::Result::ItemCategory>
+Related object: L<Difs::Schema::Result::UserRole>
 
 =cut
 
 __PACKAGE__->has_many(
-  "item_categories",
-  "MyApp::Schema::Result::ItemCategory",
-  { "foreign.category_id" => "self.id" },
+  "user_roles",
+  "Difs::Schema::Result::UserRole",
+  { "foreign.role_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 items
+=head2 users
 
 Type: many_to_many
 
-Composing rels: L</item_categories> -> item
+Composing rels: L</user_roles> -> user
 
 =cut
 
-__PACKAGE__->many_to_many("items", "item_categories", "item");
+__PACKAGE__->many_to_many("users", "user_roles", "user");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-05-22 01:23:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:SItD1WHzejoKebQiXO55ag
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-05-23 05:27:11
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:im6/ATI5k2CN2/NuXZoK5A
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

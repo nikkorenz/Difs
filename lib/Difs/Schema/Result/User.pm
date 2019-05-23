@@ -1,12 +1,12 @@
 use utf8;
-package MyApp::Schema::Result::Item;
+package Difs::Schema::Result::User;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-MyApp::Schema::Result::Item
+Difs::Schema::Result::User
 
 =cut
 
@@ -32,11 +32,11 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp");
 
-=head1 TABLE: C<item>
+=head1 TABLE: C<users>
 
 =cut
 
-__PACKAGE__->table("item");
+__PACKAGE__->table("users");
 
 =head1 ACCESSORS
 
@@ -46,39 +46,34 @@ __PACKAGE__->table("item");
   is_auto_increment: 1
   is_nullable: 0
 
-=head2 name
+=head2 username
 
   data_type: 'text'
   is_nullable: 1
 
-=head2 brand
+=head2 password
 
   data_type: 'text'
   is_nullable: 1
 
-=head2 color
+=head2 email_address
 
   data_type: 'text'
   is_nullable: 1
 
-=head2 note
+=head2 first_name
 
   data_type: 'text'
   is_nullable: 1
 
-=head2 img
+=head2 last_name
 
   data_type: 'text'
   is_nullable: 1
 
-=head2 created
+=head2 active
 
-  data_type: 'timestamp'
-  is_nullable: 1
-
-=head2 updated
-
-  data_type: 'timestamp'
+  data_type: 'integer'
   is_nullable: 1
 
 =cut
@@ -86,20 +81,18 @@ __PACKAGE__->table("item");
 __PACKAGE__->add_columns(
   "id",
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
-  "name",
+  "username",
   { data_type => "text", is_nullable => 1 },
-  "brand",
+  "password",
   { data_type => "text", is_nullable => 1 },
-  "color",
+  "email_address",
   { data_type => "text", is_nullable => 1 },
-  "note",
+  "first_name",
   { data_type => "text", is_nullable => 1 },
-  "img",
+  "last_name",
   { data_type => "text", is_nullable => 1 },
-  "created",
-  { data_type => "timestamp", is_nullable => 1 },
-  "updated",
-  { data_type => "timestamp", is_nullable => 1 },
+  "active",
+  { data_type => "integer", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -116,34 +109,34 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
-=head2 item_categories
+=head2 user_roles
 
 Type: has_many
 
-Related object: L<MyApp::Schema::Result::ItemCategory>
+Related object: L<Difs::Schema::Result::UserRole>
 
 =cut
 
 __PACKAGE__->has_many(
-  "item_categories",
-  "MyApp::Schema::Result::ItemCategory",
-  { "foreign.item_id" => "self.id" },
+  "user_roles",
+  "Difs::Schema::Result::UserRole",
+  { "foreign.user_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 categories
+=head2 roles
 
 Type: many_to_many
 
-Composing rels: L</item_categories> -> category
+Composing rels: L</user_roles> -> role
 
 =cut
 
-__PACKAGE__->many_to_many("categories", "item_categories", "category");
+__PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-05-22 01:23:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:iIMO9EKvqSdUf0ePlexm4Q
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-05-23 05:27:11
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8Eliu4PeUNmcWmzjPCcQFg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

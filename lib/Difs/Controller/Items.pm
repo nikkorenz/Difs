@@ -204,6 +204,31 @@ sub list_recent :Chained('base') :PathPart('list_recent') :Args(1) {
     $c->stash(template => 'items/list.tt');
 }
 
+=head2 list_recent_tcp
+ 
+List recently created items
+ 
+=cut
+ 
+sub list_recent_adidas :Chained('base') :PathPart('list_recent_adidas') :Args(1) {
+    my ($self, $c, $mins) = @_;
+ 
+    # Retrieve all of the book records as book model objects and store in the
+    # stash where they can be accessed by the TT template, but only
+    # retrieve items created within the last $min number of minutes
+    # AND that have 'TCP' in the title
+    $c->stash(items => [
+            $c->model('DB::Item')
+                ->created_after(DateTime->now->subtract(minutes => $mins))
+                ->brand_like('adidas')
+        ]);
+ 
+    # Set the TT template to use.  You will almost always want to do this
+    # in your action methods (action methods respond to user input in
+    # your controllers).
+    $c->stash(template => 'items/list.tt');
+}
+
 =encoding utf8
 
 =head1 category

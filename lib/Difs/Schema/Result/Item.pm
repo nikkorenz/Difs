@@ -155,6 +155,39 @@ __PACKAGE__->add_columns(
     { data_type => 'timestamp', set_on_create => 1, set_on_update => 1 },
 );
 
+=head2 author_count
+ 
+Return the number of authors for the current book
+ 
+=cut
+ 
+sub category_count {
+    my ($self) = @_;
+ 
+    # Use the 'many_to_many' relationship to fetch all of the authors for the current
+    # and the 'count' method in DBIx::Class::ResultSet to get a SQL COUNT
+    return $self->categories->count;
+}
+
+=head2 author_list
+ 
+Return a comma-separated list of authors for the current book
+ 
+=cut
+ 
+sub category_list {
+    my ($self) = @_;
+ 
+    # Loop through all authors for the current book, calling all the 'full_name'
+    # Result Class method for each
+    my @names;
+    foreach my $category ($self->categories) {
+        push(@names, $category->id_name);
+    }
+ 
+    return join(",", @names);
+}
+
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 __PACKAGE__->meta->make_immutable;

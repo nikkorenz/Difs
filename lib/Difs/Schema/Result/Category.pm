@@ -103,6 +103,14 @@ __PACKAGE__->many_to_many("items", "item_categories", "item");
 # Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-05-22 01:50:04
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:6iQVszFfbXFp9NbCRR6FAA
 
+#
+# Row-level helper methods
+#
+sub id_name {
+    my ($self) = @_;
+ 
+    return $self->id . ' ' . $self->name;
+}
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 __PACKAGE__->meta->make_immutable;
